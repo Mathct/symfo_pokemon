@@ -1,1 +1,9 @@
 <h1>La liste des Pokemons</h1>
+
+{% for pokemon in pokemons %}
+    <div>Nom: {{pokemon.name}}</div>
+    <div>Type: {{pokemon.type}}</div>
+    <div>Level: {{pokemon.level}}</div>
+    <div>Description: {{pokemon.desciption}}</div>
+    <br>
+{% endfor %}
