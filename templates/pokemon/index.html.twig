@@ -11,9 +11,6 @@
     <a href="{{ path('pokemon', { id: pokemon.id }) }}">
         <button>Voir</button>
     </a>
-    <form action="{{ path('pokemon_delete', { id: pokemon.id }) }}" method='POST'>
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pokemon.id)}}">
-        <input type="submit" value="Supprimer">
-    </form>
+   {% include "pokemon/_delete_pokemon.html.twig" %}
 </section>
 {% endfor %}
