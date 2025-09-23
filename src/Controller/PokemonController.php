@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PokemonController extends AbstractController
 {
+    // Afficher tous les pokemons
     #[Route('/pokemon', name:'pokemons')]
     public function index(PokemonRepository $PokemonRepo): Response
     {
@@ -24,6 +25,19 @@ final class PokemonController extends AbstractController
         ]);
     }
 
+    //Afficher un pokemon
+    #[Route('/pokemon/{id}', name:'pokemon')]
+    public function show(PokemonRepository $PokemonRepo, int $id): Response
+    {
+        
+        $pokemon = $PokemonRepo->findOneBy(["id" => $id]);
+
+        return $this->render('pokemon/show.html.twig', [
+            'pokemon' => $pokemon
+        ]);
+    }
+
+    // Creer un pokemon
     #[Route('/pokemon/new')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
