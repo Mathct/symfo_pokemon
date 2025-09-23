@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PokemonController extends AbstractController
 {
     // Afficher tous les pokemons
-    #[Route('/pokemon', name:'pokemons')]
+    #[Route('/pokemon', name:'pokemons', methods:['GET'])]
     public function index(PokemonRepository $PokemonRepo): Response
     {
 
@@ -26,7 +26,7 @@ final class PokemonController extends AbstractController
     }
 
     //Afficher un pokemon
-    #[Route('/pokemon/{id}', name:'pokemon')]
+    #[Route('/pokemon/show/{id}', name:'pokemon', methods:['GET'])]
     public function show(PokemonRepository $PokemonRepo, int $id): Response
     {
         
@@ -38,7 +38,7 @@ final class PokemonController extends AbstractController
     }
 
     // Creer un pokemon
-    #[Route('/pokemon/new')]
+    #[Route('/pokemon/new', name:'pokemon_new', methods:['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         // je crée une instance de Pokemon
@@ -63,6 +63,26 @@ final class PokemonController extends AbstractController
             'formPokemon' => $formPokemon
         ]);
     
+    }
+
+    // Supprimer un pokemon
+    #[Route('/pokemon/delete/{id}', name:'pokemon_delete', methods:['POST'])]
+    public function delete(int $id, Request $request, Pokemon $pokemon, EntityManagerInterface $em): Response //Pokemon $pokemon permet de se passer de $pokemon = $PokemonRepo->findOneBy(["id" => $id]);
+    {
+        if($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')))
+        {
+            $em->remove($pokemon);
+            $em->flush();
+            return $this->redirectToRoute('pokemons');
+        }
+
+        else {
+            return $this->redirectToRoute('pokemons');
+        }
+
+        
+       
+        
     }
 
 

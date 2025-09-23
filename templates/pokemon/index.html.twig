@@ -1,11 +1,19 @@
 <h1>La liste des Pokemons</h1>
 
+<a href="{{path('pokemon_new')}}">Ajouter un Pokemon</a>
+
 {% for pokemon in pokemons %}
 <section>
     <h2>{{pokemon.name}}</h2>
     <span>Type: {{pokemon.type}}</span>
     <span>Level: {{pokemon.level}}</span>
     <p>Description: {{pokemon.desciption}}</p>
-    <button>Voir</button>
+    <a href="{{ path('pokemon', { id: pokemon.id }) }}">
+        <button>Voir</button>
+    </a>
+    <form action="{{ path('pokemon_delete', { id: pokemon.id }) }}" method='POST'>
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pokemon.id)}}">
+        <input type="submit" value="Supprimer">
+    </form>
 </section>
 {% endfor %}
