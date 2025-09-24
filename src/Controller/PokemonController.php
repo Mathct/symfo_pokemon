@@ -55,7 +55,7 @@ final class PokemonController extends AbstractController
             $em->persist($pokemon);  //equivalent du prepare
             $em->flush(); //equivalent du execute
 
-            // revenir sur la page des pokemon (la methode qui a le name 'pokemons')
+            // revenir sur la page des pokemon (la route qui a le name 'pokemons')
             return $this->redirectToRoute('pokemons');
         }
 
@@ -83,6 +83,29 @@ final class PokemonController extends AbstractController
         
        
         
+    }
+
+
+    // Editer un pokemon
+    #[Route('/pokemon/{id}/edit', name:'pokemon_edit', methods:['GET', 'POST'])]
+    public function edit(int $id, Request $request, Pokemon $pokemon, EntityManagerInterface $em): Response //Pokemon $pokemon permet de se passer de $pokemon = $PokemonRepo->findOneBy(["id" => $id]);
+    {
+        $formPokemon = $this->createForm(PokemonType::class, $pokemon);
+
+        //recupere la requete en post ou get de ce formulaire (et seulement ce formulaire)
+        $formPokemon->handleRequest($request);
+
+        if($formPokemon->isSubmitted() && $formPokemon->isValid()){
+              
+            $em->flush(); 
+
+            // revenir sur la page des pokemon (la route qui a le name 'pokemons')
+            return $this->redirectToRoute('pokemons');
+        }
+
+         return $this->render('pokemon/edit.html.twig', [
+            'formPokemon' => $formPokemon
+        ]);
     }
 
 

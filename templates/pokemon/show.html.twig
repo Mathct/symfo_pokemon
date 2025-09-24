@@ -1,10 +1,15 @@
 <a href="{{path('pokemons')}}">Retour</a>
 
-{% include "pokemon/_delete_pokemon.html.twig" %}
+
 
 <section>
     <h2>{{pokemon.name}}</h2>
     <span>Type: {{pokemon.type}}</span>
     <span>Level: {{pokemon.level}}</span>
     <p>Description: {{pokemon.desciption}}</p>
+
+    <a href="{{ path('pokemon_edit', { id: pokemon.id }) }}">
+        <button>Modifier</button>
+    </a>
+    {% include "pokemon/_delete_pokemon.html.twig" %}
 </section>
