@@ -11,10 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/pokemon')]
 final class PokemonController extends AbstractController
 {
     // Afficher tous les pokemons
-    #[Route('/pokemon', name:'pokemons', methods:['GET'])]
+    #[Route('/', name:'pokemons', methods:['GET'])]
     public function index(PokemonRepository $PokemonRepo): Response
     {
 
@@ -26,7 +27,7 @@ final class PokemonController extends AbstractController
     }
 
     //Afficher un pokemon
-    #[Route('/pokemon/show/{id}', name:'pokemon', methods:['GET'])]
+    #[Route('/show/{id}', name:'pokemon', methods:['GET'])]
     public function show(PokemonRepository $PokemonRepo, int $id): Response
     {
         
@@ -38,7 +39,7 @@ final class PokemonController extends AbstractController
     }
 
     // Creer un pokemon
-    #[Route('/pokemon/new', name:'pokemon_new', methods:['GET', 'POST'])]
+    #[Route('/new', name:'pokemon_new', methods:['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         // je crée une instance de Pokemon
@@ -66,7 +67,7 @@ final class PokemonController extends AbstractController
     }
 
     // Supprimer un pokemon
-    #[Route('/pokemon/delete/{id}', name:'pokemon_delete', methods:['POST'])]
+    #[Route('/delete/{id}', name:'pokemon_delete', methods:['POST'])]
     public function delete(int $id, Request $request, Pokemon $pokemon, EntityManagerInterface $em): Response //Pokemon $pokemon permet de se passer de $pokemon = $PokemonRepo->findOneBy(["id" => $id]);
     {
         if($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')))
@@ -87,7 +88,7 @@ final class PokemonController extends AbstractController
 
 
     // Editer un pokemon
-    #[Route('/pokemon/{id}/edit', name:'pokemon_edit', methods:['GET', 'POST'])]
+    #[Route('/{id}/edit', name:'pokemon_edit', methods:['GET', 'POST'])]
     public function edit(int $id, Request $request, Pokemon $pokemon, EntityManagerInterface $em): Response //Pokemon $pokemon permet de se passer de $pokemon = $PokemonRepo->findOneBy(["id" => $id]);
     {
         $formPokemon = $this->createForm(PokemonType::class, $pokemon);
