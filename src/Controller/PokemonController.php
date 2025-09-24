@@ -82,10 +82,7 @@ final class PokemonController extends AbstractController
             $this->addFlash('error', "echec de la suppression");
             return $this->redirectToRoute('pokemons');
         }
-
-        
-       
-        
+      
     }
 
 
