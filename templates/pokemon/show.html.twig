@@ -1,6 +1,8 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
 <a href="{{path('pokemons')}}">Retour</a>
-
-
 
 <section>
     <h2>{{pokemon.name}}</h2>
@@ -13,3 +15,5 @@
     </a>
     {% include "pokemon/_delete_pokemon.html.twig" %}
 </section>
+
+{% endblock %}
