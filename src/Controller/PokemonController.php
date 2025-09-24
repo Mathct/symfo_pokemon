@@ -74,10 +74,12 @@ final class PokemonController extends AbstractController
         {
             $em->remove($pokemon);
             $em->flush();
+            $this->addFlash('success', "votre pokemon a été supprimé");
             return $this->redirectToRoute('pokemons');
         }
 
         else {
+            $this->addFlash('error', "echec de la suppression");
             return $this->redirectToRoute('pokemons');
         }
 
@@ -99,7 +101,7 @@ final class PokemonController extends AbstractController
         if($formPokemon->isSubmitted() && $formPokemon->isValid()){
               
             $em->flush(); 
-
+            $this->addFlash('success', "votre pokemon a été modifié");
             // revenir sur la page des pokemon (la route qui a le name 'pokemons')
             return $this->redirectToRoute('pokemons');
         }

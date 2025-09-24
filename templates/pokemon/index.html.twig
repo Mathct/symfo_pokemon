@@ -1,5 +1,11 @@
 <h1>La liste des Pokemons</h1>
 
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div>{{message}}</div>
+    {% endfor %}
+{% endfor %}
+
 <a href="{{path('pokemon_new')}}">Ajouter un Pokemon</a>
 
 {% for pokemon in pokemons %}
